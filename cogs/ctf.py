@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands, tasks
-from discord import app_commands
 import aiohttp
 import datetime
 
@@ -8,33 +7,6 @@ class CTF(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.ctftime_alert.start() 
-
-    @app_commands.command(name="ctf_start", description="一鍵建立 CTF 賽事分類、論壇與討論頻道")
-    async def ctf_start(self, interaction: discord.Interaction, 賽事名稱: str):
-        guild = interaction.guild
-        
-        category = await guild.create_category(f"🏆 {賽事名稱}")
-        
-        tags = [
-            discord.ForumTag(name="Web", emoji="🌐"),
-            discord.ForumTag(name="Crypto", emoji="🔐"),
-            discord.ForumTag(name="Pwn", emoji="👾"),
-            discord.ForumTag(name="Reverse", emoji="⚙️"),
-            discord.ForumTag(name="Misc", emoji="🧩"),
-            discord.ForumTag(name="Forensics", emoji="🔍")
-        ]
-        
-        await guild.create_forum(
-            name="ctf-challenges", 
-            category=category, 
-            topic="每道題目請開一個新的貼文討論，並選擇對應的題目類別標籤",
-            available_tags=tags
-        )
-        
-        await guild.create_text_channel("writeup", category=category, topic=f"{賽事名稱} 的 Writeups 集中區")
-        await guild.create_text_channel("一般討論", category=category, topic=f"{賽事名稱} 賽事綜合討論")
-        
-        await interaction.response.send_message(f"✅ 賽事 `{賽事名稱}` 的專屬頻道與 **CTF 分類論壇** 已建置完畢！")
 
     async def fetch_upcoming_ctfs(self, limit=3):
         headers = {

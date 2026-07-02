@@ -26,7 +26,7 @@ bot = RCEsBot()
 @bot.tree.command(name="help", description="顯示CTF Competition的使用教學")
 async def help_command(interaction: discord.Interaction):
     embed = discord.Embed(title="CTF Competition指令教學", color=discord.Color.blue())
-    embed.add_field(name="CTF 功能", value="`/ctf_start <賽事名稱>`: 一鍵建立賽事論壇與專屬頻道\n`/ctftime` (自動化): 賽事提醒會發佈到指定頻道", inline=False)
+    embed.add_field(name="CTF 功能", value="/ctftime`: 賽事提醒會發佈到頻道", inline=False)
     await interaction.response.send_message(embed=embed)
 
 if __name__ == '__main__':
